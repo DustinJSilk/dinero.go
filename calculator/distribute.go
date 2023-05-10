@@ -1,6 +1,6 @@
 package calculator
 
-func (c Calculator[T]) Distribute(value T, ratios ...T) []T {
+func (c calculator[T]) Distribute(value T, ratios ...T) []T {
 	zero := c.Zero()
 	one := c.One()
 

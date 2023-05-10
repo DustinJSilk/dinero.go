@@ -7,11 +7,11 @@ import (
 )
 
 func unsafeAllocate[T any](dinero Dinero[T], ratios []T) []Dinero[T] {
-	shares := dinero.calculator.Distribute(dinero.amount, ratios...)
+	shares := dinero.calculator.Distribute(dinero.Amount, ratios...)
 
 	dineros := make([]Dinero[T], len(shares))
 	for i, v := range shares {
-		dineros[i] = NewDineroWithOptions(v, dinero.currency, dinero.scale, dinero.calculator)
+		dineros[i] = NewDineroWithOptions(v, dinero.Currency, dinero.Scale, dinero.calculator)
 	}
 
 	return dineros
@@ -70,7 +70,7 @@ func (d Dinero[T]) AllocateScaled(ratios ...ScaledAmount[T]) ([]Dinero[T], error
 		normalizedRatios[i] = c.Multiply(v.Amount(), c.Power(c.Ten(), factor))
 	}
 
-	newScale := c.Add(d.scale, highestScale)
+	newScale := c.Add(d.Scale, highestScale)
 	transformed, err := d.TransformScale(newScale, divide.Down[T]{})
 	if err != nil {
 		return nil, err

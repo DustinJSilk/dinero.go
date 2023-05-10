@@ -3,9 +3,9 @@ package dinero_test
 import (
 	"testing"
 
+	"dinero.go/calculator"
 	"dinero.go/currency"
 	"dinero.go/dinero"
-	"dinero.go/types"
 )
 
 func TestCompare(t *testing.T) {
@@ -13,7 +13,7 @@ func TestCompare(t *testing.T) {
 		description string
 		a           dinero.Dinero[int]
 		b           dinero.Dinero[int]
-		expect      types.CompareResult
+		expect      calculator.CompareResult
 		expectErr   bool
 	}
 
@@ -23,25 +23,25 @@ func TestCompare(t *testing.T) {
 			description: "returns LT when the first amount is less than the other",
 			a:           dinero.NewDinero(500, currency.USD),
 			b:           dinero.NewDinero(800, currency.USD),
-			expect:      types.LT,
+			expect:      calculator.LT,
 		},
 		{
 			description: "returns EQ when amounts are equal",
 			a:           dinero.NewDinero(500, currency.USD),
 			b:           dinero.NewDinero(500, currency.USD),
-			expect:      types.EQ,
+			expect:      calculator.EQ,
 		},
 		{
 			description: "returns GT when the first amount is greater than the other",
 			a:           dinero.NewDinero(800, currency.USD),
 			b:           dinero.NewDinero(500, currency.USD),
-			expect:      types.GT,
+			expect:      calculator.GT,
 		},
 		{
 			description: "normalizes the result to the highest scale",
 			a:           dinero.NewDineroWithScale(5000, currency.USD, 3),
 			b:           dinero.NewDinero(800, currency.USD),
-			expect:      types.LT,
+			expect:      calculator.LT,
 		},
 		{
 			description: "errors when using different currencies",
@@ -54,25 +54,25 @@ func TestCompare(t *testing.T) {
 			description: "returns LT when the first amount is less than the other",
 			a:           dinero.NewDinero(5, currency.MGA),
 			b:           dinero.NewDinero(8, currency.MGA),
-			expect:      types.LT,
+			expect:      calculator.LT,
 		},
 		{
 			description: "returns EQ when amounts are equal",
 			a:           dinero.NewDinero(5, currency.MGA),
 			b:           dinero.NewDinero(5, currency.MGA),
-			expect:      types.EQ,
+			expect:      calculator.EQ,
 		},
 		{
 			description: "returns GT when the first amount is greater than the other",
 			a:           dinero.NewDinero(8, currency.MGA),
 			b:           dinero.NewDinero(5, currency.MGA),
-			expect:      types.GT,
+			expect:      calculator.GT,
 		},
 		{
 			description: "normalizes the result to the highest scale",
 			a:           dinero.NewDineroWithScale(25, currency.MGA, 2),
 			b:           dinero.NewDinero(8, currency.MGA),
-			expect:      types.LT,
+			expect:      calculator.LT,
 		},
 		{
 			description: "errors when using different currencies",

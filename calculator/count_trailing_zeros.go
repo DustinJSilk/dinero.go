@@ -1,6 +1,6 @@
 package calculator
 
-func (c Calculator[T]) CountTrailingZeros(value T, base T) (T, error) {
+func (c calculator[T]) CountTrailingZeros(value T, base T) (T, error) {
 	zero := c.Zero()
 
 	if c.Equal(value, zero) {

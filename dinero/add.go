@@ -11,6 +11,6 @@ func (d Dinero[T]) Add(addend Dinero[T]) (Dinero[T], error) {
 	}
 
 	normalized := NormalizeScale(d, addend)
-	amount := d.calculator.Add(normalized[0].amount, normalized[1].amount)
-	return NewDineroWithOptions(amount, d.currency, normalized[0].scale, d.calculator), nil
+	amount := d.calculator.Add(normalized[0].Amount, normalized[1].Amount)
+	return NewDineroWithOptions(amount, d.Currency, normalized[0].Scale, d.calculator), nil
 }

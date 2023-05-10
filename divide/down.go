@@ -1,13 +1,15 @@
 package divide
 
-import "dinero.go/types"
+import (
+	"dinero.go/calculator"
+)
 
 // Divide and round down. Rounding down happens whenever the quotient is not an integer.
 type Down[T any] struct{}
 
 var DownInt = Down[int]{}
 
-func (Down[T]) Divide(amount T, factor T, calculator types.Calculator[T]) (T, error) {
+func (Down[T]) Divide(amount T, factor T, calculator calculator.Calculator[T]) (T, error) {
 	zero := calculator.Zero()
 	isPositive := calculator.GreaterThan(amount, zero)
 	quotient, err := calculator.IntegerDivide(amount, factor)

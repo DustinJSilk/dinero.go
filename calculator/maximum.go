@@ -1,7 +1,7 @@
 package calculator
 
 // Returns the highest value.
-func (c Calculator[T]) Maximum(values ...T) T {
+func (c calculator[T]) Maximum(values ...T) T {
 	out := values[0]
 
 	for _, v := range values {

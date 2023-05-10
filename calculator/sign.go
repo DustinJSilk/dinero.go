@@ -1,6 +1,6 @@
 package calculator
 
-func (c Calculator[T]) Sign(value T) T {
+func (c calculator[T]) Sign(value T) T {
 	zero := c.Zero()
 
 	if c.Equal(value, zero) {

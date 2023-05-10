@@ -14,13 +14,13 @@ func Minimum[T any](dineros ...Dinero[T]) (Dinero[T], error) {
 	d := normalized[0]
 	amounts := make([]T, len(dineros))
 	for i, v := range normalized {
-		amounts[i] = v.amount
+		amounts[i] = v.Amount
 	}
 
 	return NewDineroWithOptions(
 		d.calculator.Minimum(amounts...),
-		d.currency,
-		d.scale,
+		d.Currency,
+		d.Scale,
 		d.calculator,
 	), nil
 }

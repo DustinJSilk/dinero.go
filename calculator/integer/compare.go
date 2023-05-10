@@ -1,14 +1,16 @@
 package integer
 
-import "dinero.go/types"
+import (
+	"dinero.go/calculator"
+)
 
-func (Calculator) Compare(a, b int) types.CompareResult {
+func (Calculator) Compare(a, b int) calculator.CompareResult {
 	switch {
 	case a < b:
-		return types.LT
+		return calculator.LT
 	case a > b:
-		return types.GT
+		return calculator.GT
 	default:
-		return types.EQ
+		return calculator.EQ
 	}
 }

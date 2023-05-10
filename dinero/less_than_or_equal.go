@@ -9,5 +9,5 @@ func (d Dinero[T]) LessThanOrEqual(dinero Dinero[T]) bool {
 
 	normalized := NormalizeScale(d, dinero)
 
-	return d.calculator.LessThanOrEqual(normalized[0].amount, normalized[1].amount)
+	return d.calculator.LessThanOrEqual(normalized[0].Amount, normalized[1].Amount)
 }

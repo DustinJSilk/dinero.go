@@ -3,18 +3,18 @@ package dinero
 import (
 	"fmt"
 
-	"dinero.go/types"
+	"dinero.go/calculator"
 )
 
-func unsafeCompare[T any](dinero, comparator Dinero[T]) types.CompareResult {
-	return dinero.calculator.Compare(dinero.amount, comparator.amount)
+func unsafeCompare[T any](dinero, comparator Dinero[T]) calculator.CompareResult {
+	return dinero.calculator.Compare(dinero.Amount, comparator.Amount)
 }
 
 // Compare the value of d relative to comparator.
 // Returns one of LT, EQ, or GT depending on whether d is less than, equal to, or greater than comparator.
-func (d Dinero[T]) Compare(comparator Dinero[T]) (types.CompareResult, error) {
+func (d Dinero[T]) Compare(comparator Dinero[T]) (calculator.CompareResult, error) {
 	if !HaveSameCurrency(d, comparator) {
-		return types.EQ, fmt.Errorf("mismatched currencies")
+		return calculator.EQ, fmt.Errorf("mismatched currencies")
 	}
 
 	normalized := NormalizeScale(d, comparator)

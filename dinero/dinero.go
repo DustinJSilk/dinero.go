@@ -4,21 +4,20 @@ import (
 	"dinero.go/calculator"
 	"dinero.go/calculator/integer"
 	"dinero.go/currency"
-	"dinero.go/types"
 )
 
 type Dinero[T any] struct {
-	amount     T
-	currency   currency.Currency[T]
-	scale      T
-	calculator types.Calculator[T]
+	Amount     T                    `json:"amount"`
+	Currency   currency.Currency[T] `json:"currency"`
+	Scale      T                    `json:"scale"`
+	calculator calculator.Calculator[T]
 }
 
 func NewDinero(amount int, currency currency.Currency[int]) Dinero[int] {
 	dinero := Dinero[int]{
-		amount:     amount,
-		scale:      currency.Exponent(),
-		currency:   currency,
+		Amount:     amount,
+		Scale:      currency.Exponent,
+		Currency:   currency,
 		calculator: calculator.NewCalculator[int](integer.Calculator{}),
 	}
 
@@ -27,9 +26,9 @@ func NewDinero(amount int, currency currency.Currency[int]) Dinero[int] {
 
 func NewDineroWithScale(amount int, currency currency.Currency[int], scale int) Dinero[int] {
 	dinero := Dinero[int]{
-		amount:     amount,
-		scale:      scale,
-		currency:   currency,
+		Amount:     amount,
+		Scale:      scale,
+		Currency:   currency,
 		calculator: calculator.NewCalculator[int](integer.Calculator{}),
 	}
 
@@ -40,12 +39,12 @@ func NewDineroWithOptions[T any](
 	amount T,
 	currency currency.Currency[T],
 	scale T,
-	calculator types.Calculator[T],
+	calculator calculator.Calculator[T],
 ) Dinero[T] {
 	dinero := Dinero[T]{
-		amount:     amount,
-		currency:   currency,
-		scale:      scale,
+		Amount:     amount,
+		Currency:   currency,
+		Scale:      scale,
 		calculator: calculator,
 	}
 

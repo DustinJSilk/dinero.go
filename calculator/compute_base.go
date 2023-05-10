@@ -1,6 +1,6 @@
 package calculator
 
-func (c Calculator[T]) ComputeBase(base ...T) T {
+func (c calculator[T]) ComputeBase(base ...T) T {
 	if len(base) == 1 {
 		return base[0]
 	}

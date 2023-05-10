@@ -1,7 +1,9 @@
 package divide
 
-import "dinero.go/types"
+import (
+	"dinero.go/calculator"
+)
 
 type Divider[T any] interface {
-	Divide(amount T, factor T, calculator types.Calculator[T]) (T, error)
+	Divide(amount T, factor T, calculator calculator.Calculator[T]) (T, error)
 }

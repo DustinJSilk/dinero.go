@@ -3,8 +3,8 @@ package integer_test
 import (
 	"testing"
 
+	"dinero.go/calculator"
 	"dinero.go/calculator/integer"
-	"dinero.go/types"
 )
 
 func TestCompare(t *testing.T) {
@@ -13,19 +13,19 @@ func TestCompare(t *testing.T) {
 	type test struct {
 		a      int
 		b      int
-		expect types.CompareResult
+		expect calculator.CompareResult
 	}
 
 	tests := []test{
-		{a: 1, b: 2, expect: types.LT},
-		{a: -2, b: -1, expect: types.LT},
-		{a: 1e5, b: 2e5, expect: types.LT},
-		{a: 2, b: 1, expect: types.GT},
-		{a: -1, b: -2, expect: types.GT},
-		{a: 2e5, b: 1e5, expect: types.GT},
-		{a: 2, b: 2, expect: types.EQ},
-		{a: -2, b: -2, expect: types.EQ},
-		{a: 2e5, b: 2e5, expect: types.EQ},
+		{a: 1, b: 2, expect: calculator.LT},
+		{a: -2, b: -1, expect: calculator.LT},
+		{a: 1e5, b: 2e5, expect: calculator.LT},
+		{a: 2, b: 1, expect: calculator.GT},
+		{a: -1, b: -2, expect: calculator.GT},
+		{a: 2e5, b: 1e5, expect: calculator.GT},
+		{a: 2, b: 2, expect: calculator.EQ},
+		{a: -2, b: -2, expect: calculator.EQ},
+		{a: 2e5, b: 2e5, expect: calculator.EQ},
 	}
 
 	for _, tc := range tests {

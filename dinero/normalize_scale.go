@@ -7,7 +7,7 @@ import (
 func NormalizeScale[T any](dineros ...Dinero[T]) []Dinero[T] {
 	scales := make([]T, len(dineros))
 	for i, v := range dineros {
-		scales[i] = v.scale
+		scales[i] = v.Scale
 	}
 
 	calculator := dineros[0].calculator
@@ -15,7 +15,7 @@ func NormalizeScale[T any](dineros ...Dinero[T]) []Dinero[T] {
 
 	out := make([]Dinero[T], len(dineros))
 	for i, v := range dineros {
-		if calculator.Equal(highestScale, v.scale) {
+		if calculator.Equal(highestScale, v.Scale) {
 			out[i] = v
 			continue
 		}

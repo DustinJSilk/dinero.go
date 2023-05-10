@@ -1,7 +1,7 @@
 package divide
 
 import (
-	"dinero.go/types"
+	"dinero.go/calculator"
 )
 
 // Divide and round towards "nearest neighbor" unless both neighbors are
@@ -15,7 +15,7 @@ type HalfUp[T any] struct{}
 
 var HalfUpInt = HalfUp[int]{}
 
-func (HalfUp[T]) Divide(amount T, factor T, calculator types.Calculator[T]) (T, error) {
+func (HalfUp[T]) Divide(amount T, factor T, calculator calculator.Calculator[T]) (T, error) {
 	zero := calculator.Zero()
 	remainder, err := calculator.Modulo(amount, factor)
 	if err != nil {

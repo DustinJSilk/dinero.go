@@ -1,6 +1,6 @@
 package calculator
 
-func (c Calculator[T]) GetDivisors(bases ...T) []T {
+func (c calculator[T]) GetDivisors(bases ...T) []T {
 	divisors := make([]T, len(bases))
 	one := c.One()
 
