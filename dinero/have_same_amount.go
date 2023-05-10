@@ -1,19 +1,15 @@
 package dinero
 
 func HaveSameAmount[T any](dineros ...Dinero[T]) bool {
-	// normalized := NormalizeScale(dineros...)
+	normalized := NormalizeScale(dineros...)
+	first := normalized[0].amount
+	c := dineros[0].calculator
 
-	// calculator := dineros[0].calculator
-	// comparator := dineros[0].currency
-	// comparatorBase := calculator.ComputeBase(comparator.Base())
-
-	// for _, v := range dineros {
-	// 	if v.currency.Code() != comparator.Code() ||
-	// 		!calculator.Equal(v.currency.Exponent(), comparator.Exponent()) ||
-	// 		!calculator.Equal(calculator.ComputeBase(v.currency.Base()), comparatorBase) {
-	// 		return false
-	// 	}
-	// }
+	for _, v := range normalized {
+		if !c.Equal(first, v.amount) {
+			return false
+		}
+	}
 
 	return true
 }
