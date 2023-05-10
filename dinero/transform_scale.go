@@ -5,7 +5,7 @@ import (
 )
 
 // Transform a Dinero object to a new scale.
-// Passing nil to the divider will default to rounding Down
+// Passing nil to the divider will default to rounding Down.
 func (d Dinero[T]) TransformScale(newScale T, divider divide.Divider[T]) (Dinero[T], error) {
 	if d.calculator.Equal(d.scale, newScale) {
 		return NewDineroWithOptions(d.amount, d.currency, d.scale, d.calculator), nil
