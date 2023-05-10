@@ -130,6 +130,84 @@ func TestAllocate(t *testing.T) {
 	}
 }
 
+func TestAllocateScaled(t *testing.T) {
+	type test struct {
+		description string
+		dinero      dinero.Dinero[int]
+		ratios      []dinero.ScaledAmount[int]
+		expect      []dinero.Dinero[int]
+		expectErr   bool
+	}
+
+	tests := []test{
+		// decimal based currencies (USD)
+		{
+			description: "converts the allocated amounts to the safest scale",
+			dinero:      dinero.NewDinero(100, currency.USD),
+			ratios: []dinero.ScaledAmount[int]{
+				{Amount: 505, Scale: 1},
+				{Amount: 495, Scale: 1},
+			},
+			expect: []dinero.Dinero[int]{
+				dinero.NewDineroWithScale(505, currency.USD, 3),
+				dinero.NewDineroWithScale(495, currency.USD, 3),
+			},
+		},
+		{
+			description: "converts the ratios to the same scale before allocating",
+			dinero:      dinero.NewDinero(100, currency.USD),
+			ratios: []dinero.ScaledAmount[int]{
+				{Amount: 5050, Scale: 2},
+				{Amount: 495, Scale: 1},
+			},
+			expect: []dinero.Dinero[int]{
+				dinero.NewDineroWithScale(5050, currency.USD, 4),
+				dinero.NewDineroWithScale(4950, currency.USD, 4),
+			},
+		},
+		// non-decimal based currencies (MGA)
+		{
+			description: "converts the allocated amounts to the safest scale",
+			dinero:      dinero.NewDinero(5, currency.MGA),
+			ratios: []dinero.ScaledAmount[int]{
+				{Amount: 505, Scale: 1},
+				{Amount: 495, Scale: 1},
+			},
+			expect: []dinero.Dinero[int]{
+				dinero.NewDineroWithScale(13, currency.MGA, 2),
+				dinero.NewDineroWithScale(12, currency.MGA, 2),
+			},
+		},
+		{
+			description: "converts the ratios to the same scale before allocating",
+			dinero:      dinero.NewDinero(5, currency.MGA),
+			ratios: []dinero.ScaledAmount[int]{
+				{Amount: 5050, Scale: 2},
+				{Amount: 495, Scale: 1},
+			},
+			expect: []dinero.Dinero[int]{
+				dinero.NewDineroWithScale(64, currency.MGA, 3),
+				dinero.NewDineroWithScale(61, currency.MGA, 3),
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		got, err := tc.dinero.AllocateScaled(tc.ratios...)
+		if err != nil {
+			if tc.expectErr {
+				continue
+			}
+
+			t.Fatalf("%s error: %v", tc.description, err)
+		}
+
+		if !reflect.DeepEqual(tc.expect, got) {
+			t.Fatalf("%s expected a: %v, got: %v", tc.description, tc.expect, got)
+		}
+	}
+}
+
 func BenchmarkAllocate(b *testing.B) {
 	da := dinero.NewDinero(100, currency.USD)
 

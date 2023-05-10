@@ -16,7 +16,6 @@ type CalculatorCore[T any] interface {
 	IntegerDivide(dividend, divisor T) (T, error)
 	Modulo(dividend, divisor T) (T, error)
 	Multiply(multiplicand, multiplier T) T
-	One() T
 	Power(base, exponent T) T
 	Subtract(minuend, subtrahend T) T
 	Zero() T
@@ -39,5 +38,7 @@ type Calculator[T any] interface {
 	LessThanOrEqual(subject T, comparator T) bool
 	Maximum(values ...T) T
 	Minimum(values ...T) T
+	One() T
 	Sign(value T) T
+	Ten() T
 }

@@ -6,10 +6,18 @@ import (
 
 type Calculator[T any] struct {
 	core types.CalculatorCore[T]
+	one  T
+	ten  T
 }
 
 func NewCalculator[T any](core types.CalculatorCore[T]) Calculator[T] {
-	return Calculator[T]{core}
+	one := core.Increment(core.Zero())
+	ten := core.Zero()
+	for i := 0; i < 10; i++ {
+		ten = core.Increment(ten)
+	}
+
+	return Calculator[T]{core, one, ten}
 }
 
 func (c Calculator[T]) Add(augend, addend T) T {
@@ -41,7 +49,7 @@ func (c Calculator[T]) Multiply(multiplicand, multiplier T) T {
 }
 
 func (c Calculator[T]) One() T {
-	return c.core.One()
+	return c.one
 }
 
 func (c Calculator[T]) Power(base, exponent T) T {
@@ -50,6 +58,10 @@ func (c Calculator[T]) Power(base, exponent T) T {
 
 func (c Calculator[T]) Subtract(minuend, subtrahend T) T {
 	return c.core.Subtract(minuend, subtrahend)
+}
+
+func (c Calculator[T]) Ten() T {
+	return c.ten
 }
 
 func (c Calculator[T]) Zero() T {

@@ -2,6 +2,8 @@ package dinero
 
 import (
 	"fmt"
+
+	"dinero.go/divide"
 )
 
 func unsafeAllocate[T any](dinero Dinero[T], ratios []T) []Dinero[T] {
@@ -16,7 +18,7 @@ func unsafeAllocate[T any](dinero Dinero[T], ratios []T) []Dinero[T] {
 }
 
 // Distribute the amount of a Dinero object across a list of ratios.
-// Unlike in dinero.js, this function does not support distributing across differently scaled ratios.
+// To distribute with a ratio less than 1, use the AllocateScaled function.
 func (d Dinero[T]) Allocate(ratios ...T) ([]Dinero[T], error) {
 	if len(ratios) == 0 {
 		return nil, fmt.Errorf("missing ratios")
@@ -44,4 +46,35 @@ func (d Dinero[T]) Allocate(ratios ...T) ([]Dinero[T], error) {
 	}
 
 	return unsafeAllocate(d, ratios), nil
+}
+
+// Distribute the amount of a Dinero object across a list of scaled ratios.
+func (d Dinero[T]) AllocateScaled(ratios ...ScaledAmount[T]) ([]Dinero[T], error) {
+	c := d.calculator
+
+	scales := make([]T, len(ratios))
+	for i, v := range ratios {
+		scales[i] = v.Scale
+	}
+
+	highestScale := c.Maximum(scales...)
+
+	normalizedRatios := make([]T, len(ratios))
+	for i, v := range ratios {
+		factor := c.Zero()
+
+		if !c.Equal(v.Scale, highestScale) {
+			factor = c.Subtract(highestScale, v.Scale)
+		}
+
+		normalizedRatios[i] = c.Multiply(v.Amount, c.Power(c.Ten(), factor))
+	}
+
+	newScale := c.Add(d.scale, highestScale)
+	transformed, err := d.TransformScale(newScale, divide.Down[T]{})
+	if err != nil {
+		return nil, err
+	}
+
+	return transformed.Allocate(normalizedRatios...)
 }
