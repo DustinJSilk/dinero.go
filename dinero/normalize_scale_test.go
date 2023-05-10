@@ -32,10 +32,7 @@ func TestNormalizeScale(t *testing.T) {
 	}
 
 	for _, tc := range tests {
-		got, err := dinero.NormalizeScale(tc.a, tc.b)
-		if err != nil {
-			t.Fatalf("error: %v, %v, %e", tc.a, tc.b, err)
-		}
+		got := dinero.NormalizeScale(tc.a, tc.b)
 
 		if !reflect.DeepEqual(tc.expectA, got[0]) {
 			t.Fatalf("expected a: %v, got: %v", tc.expectA, got[0])
@@ -52,9 +49,6 @@ func BenchmarkNormalizeScale(b *testing.B) {
 	dc := dinero.NewDineroWithScale(10000, currency.USD, 3)
 
 	for i := 0; i < b.N; i++ {
-		_, err := dinero.NormalizeScale(da, db, dc)
-		if err != nil {
-			b.Fatalf("error: %e", err)
-		}
+		dinero.NormalizeScale(da, db, dc)
 	}
 }

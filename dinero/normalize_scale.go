@@ -4,7 +4,7 @@ import (
 	"dinero.go/divide"
 )
 
-func NormalizeScale[T any](dineros ...Dinero[T]) ([]Dinero[T], error) {
+func NormalizeScale[T any](dineros ...Dinero[T]) []Dinero[T] {
 	scales := make([]T, len(dineros))
 	for i, v := range dineros {
 		scales[i] = v.scale
@@ -23,9 +23,9 @@ func NormalizeScale[T any](dineros ...Dinero[T]) ([]Dinero[T], error) {
 		out[i] = newDinero
 	}
 
-	return out, nil
+	return out
 }
 
-func (d Dinero[T]) NormalizeScaleWith(dineros ...Dinero[T]) ([]Dinero[T], error) {
+func (d Dinero[T]) NormalizeScaleWith(dineros ...Dinero[T]) []Dinero[T] {
 	return NormalizeScale(append(dineros, d)...)
 }

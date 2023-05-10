@@ -15,10 +15,7 @@ func (d Dinero[T]) Add(addend Dinero[T]) (Dinero[T], error) {
 		return Dinero[T]{}, fmt.Errorf("mismatched currencies")
 	}
 
-	normalized, err := NormalizeScale(d, addend)
-	if err != nil {
-		return Dinero[T]{}, err
-	}
+	normalized := NormalizeScale(d, addend)
 
 	return unsafeAdd(normalized[0], normalized[1]), nil
 }

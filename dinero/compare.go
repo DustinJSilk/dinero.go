@@ -17,10 +17,7 @@ func (d Dinero[T]) Compare(comparator Dinero[T]) (types.CompareResult, error) {
 		return types.EQ, fmt.Errorf("mismatched currencies")
 	}
 
-	normalized, err := NormalizeScale(d, comparator)
-	if err != nil {
-		return types.EQ, err
-	}
+	normalized := NormalizeScale(d, comparator)
 
 	return unsafeCompare(normalized[0], normalized[1]), nil
 }
