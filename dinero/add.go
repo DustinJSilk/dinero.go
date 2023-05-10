@@ -4,11 +4,6 @@ import (
 	"fmt"
 )
 
-func unsafeAdd[T any](augend, addend Dinero[T]) Dinero[T] {
-	amount := augend.calculator.Add(augend.amount, addend.amount)
-	return NewDineroWithOptions(amount, augend.currency, augend.scale, augend.calculator)
-}
-
 // Add addend to d and return a new Dinero.
 func (d Dinero[T]) Add(addend Dinero[T]) (Dinero[T], error) {
 	if !HaveSameCurrency(d, addend) {
@@ -16,6 +11,6 @@ func (d Dinero[T]) Add(addend Dinero[T]) (Dinero[T], error) {
 	}
 
 	normalized := NormalizeScale(d, addend)
-
-	return unsafeAdd(normalized[0], normalized[1]), nil
+	amount := d.calculator.Add(normalized[0].amount, normalized[1].amount)
+	return NewDineroWithOptions(amount, d.currency, d.scale, d.calculator), nil
 }
