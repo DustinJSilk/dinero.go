@@ -145,8 +145,8 @@ func TestAllocateScaled(t *testing.T) {
 			description: "converts the allocated amounts to the safest scale",
 			dinero:      dinero.NewDinero(100, currency.USD),
 			ratios: []dinero.ScaledAmount[int]{
-				{Amount: 505, Scale: 1},
-				{Amount: 495, Scale: 1},
+				dinero.NewScaledAmount(505, 1),
+				dinero.NewScaledAmount(495, 1),
 			},
 			expect: []dinero.Dinero[int]{
 				dinero.NewDineroWithScale(505, currency.USD, 3),
@@ -157,8 +157,8 @@ func TestAllocateScaled(t *testing.T) {
 			description: "converts the ratios to the same scale before allocating",
 			dinero:      dinero.NewDinero(100, currency.USD),
 			ratios: []dinero.ScaledAmount[int]{
-				{Amount: 5050, Scale: 2},
-				{Amount: 495, Scale: 1},
+				dinero.NewScaledAmount(5050, 2),
+				dinero.NewScaledAmount(495, 1),
 			},
 			expect: []dinero.Dinero[int]{
 				dinero.NewDineroWithScale(5050, currency.USD, 4),
@@ -170,8 +170,8 @@ func TestAllocateScaled(t *testing.T) {
 			description: "converts the allocated amounts to the safest scale",
 			dinero:      dinero.NewDinero(5, currency.MGA),
 			ratios: []dinero.ScaledAmount[int]{
-				{Amount: 505, Scale: 1},
-				{Amount: 495, Scale: 1},
+				dinero.NewScaledAmount(505, 1),
+				dinero.NewScaledAmount(495, 1),
 			},
 			expect: []dinero.Dinero[int]{
 				dinero.NewDineroWithScale(13, currency.MGA, 2),
@@ -182,8 +182,8 @@ func TestAllocateScaled(t *testing.T) {
 			description: "converts the ratios to the same scale before allocating",
 			dinero:      dinero.NewDinero(5, currency.MGA),
 			ratios: []dinero.ScaledAmount[int]{
-				{Amount: 5050, Scale: 2},
-				{Amount: 495, Scale: 1},
+				dinero.NewScaledAmount(5050, 2),
+				dinero.NewScaledAmount(495, 1),
 			},
 			expect: []dinero.Dinero[int]{
 				dinero.NewDineroWithScale(64, currency.MGA, 3),

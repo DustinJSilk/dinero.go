@@ -54,7 +54,7 @@ func (d Dinero[T]) AllocateScaled(ratios ...ScaledAmount[T]) ([]Dinero[T], error
 
 	scales := make([]T, len(ratios))
 	for i, v := range ratios {
-		scales[i] = v.Scale
+		scales[i] = v.Scale()
 	}
 
 	highestScale := c.Maximum(scales...)
@@ -63,11 +63,11 @@ func (d Dinero[T]) AllocateScaled(ratios ...ScaledAmount[T]) ([]Dinero[T], error
 	for i, v := range ratios {
 		factor := c.Zero()
 
-		if !c.Equal(v.Scale, highestScale) {
-			factor = c.Subtract(highestScale, v.Scale)
+		if !c.Equal(v.Scale(), highestScale) {
+			factor = c.Subtract(highestScale, v.Scale())
 		}
 
-		normalizedRatios[i] = c.Multiply(v.Amount, c.Power(c.Ten(), factor))
+		normalizedRatios[i] = c.Multiply(v.Amount(), c.Power(c.Ten(), factor))
 	}
 
 	newScale := c.Add(d.scale, highestScale)
