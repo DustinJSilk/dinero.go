@@ -208,6 +208,29 @@ func TestAllocateScaled(t *testing.T) {
 	}
 }
 
+func FuzzAllocate(f *testing.F) {
+	f.Add(64, 5, 3, 6, 9)
+
+	f.Fuzz(func(t *testing.T, amount, ratio1, ratio2, ratio3, ratio4 int) {
+		dinero := dinero.NewDinero(amount, currency.USD)
+
+		allocated, err := dinero.Allocate(ratio1, ratio2, ratio3, ratio4)
+		if err != nil {
+			t.Errorf("Error amount: %v, ratios: %v, %v, %v, %v", amount, ratio1, ratio2, ratio3, ratio4)
+		}
+
+		// Check allocated add up to the original amount
+		total := 0
+		for _, v := range allocated {
+			total += v.Amount
+		}
+
+		if total != amount {
+			t.Errorf("Wrong amount: %v, ratios: %v, %v, %v, %v", amount, ratio1, ratio2, ratio3, ratio4)
+		}
+	})
+}
+
 func BenchmarkAllocate(b *testing.B) {
 	da := dinero.NewDinero(100, currency.USD)
 
