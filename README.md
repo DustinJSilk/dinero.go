@@ -33,10 +33,10 @@ Dinero.go also provides convinience methods `int` based rounding functions, for 
 type to the divider struct and ceate an instance of it: `divide.Down[int32]{}`.
 
 You can also create your own custom type dineros with a custom calculator by implementing the
-`CalculatorCore[T any]` interface.
+`calculator.Core[T any]` interface.
 
 ```go
-type CalculatorCore[T any] interface {
+type Core[T any] interface {
 	Add(augend, addend T) T
 	Compare(a, b T) CompareResult
 	Decrement(value T) T
