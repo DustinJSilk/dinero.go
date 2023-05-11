@@ -5,6 +5,9 @@ import (
 )
 
 // Subtract the passed Dinero object from d.
+//
+// You can only subtract objects that share the same currency. The function also normalizes objects
+// to the same scale (the highest) before subtracting them.
 func (d Dinero[T]) Subtract(subtrahend Dinero[T]) (Dinero[T], error) {
 	if !HaveSameCurrency(d, subtrahend) {
 		return Dinero[T]{}, fmt.Errorf("mismatched currencies")

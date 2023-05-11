@@ -19,6 +19,12 @@ func unsafeAllocate[T any](dinero Dinero[T], ratios []T) []Dinero[T] {
 
 // Distribute the amount of a Dinero object across a list of ratios.
 // To distribute with a ratio less than 1, use the AllocateScaled function.
+//
+// Monetary values have indivisible units, meaning you can't always exactly split them. With
+// allocate, you can split a monetary amount then distribute the remainder as evenly as possible.
+// You can use percentage or ratio style for ratios: [25, 75] and [1, 3] do the same thing. You can
+// also pass zero ratios (such as [0, 50, 50]). If there's a remainder to distribute, zero ratios
+// are skipped and return a Dinero object with amount zero.
 func (d Dinero[T]) Allocate(ratios ...T) ([]Dinero[T], error) {
 	if len(ratios) == 0 {
 		return nil, fmt.Errorf("missing ratios")
@@ -54,7 +60,7 @@ func (d Dinero[T]) AllocateScaled(ratios ...ScaledAmount[T]) ([]Dinero[T], error
 
 	scales := make([]T, len(ratios))
 	for i, v := range ratios {
-		scales[i] = v.Scale()
+		scales[i] = v.Scale
 	}
 
 	highestScale := c.Maximum(scales...)
@@ -63,11 +69,11 @@ func (d Dinero[T]) AllocateScaled(ratios ...ScaledAmount[T]) ([]Dinero[T], error
 	for i, v := range ratios {
 		factor := c.Zero()
 
-		if !c.Equal(v.Scale(), highestScale) {
-			factor = c.Subtract(highestScale, v.Scale())
+		if !c.Equal(v.Scale, highestScale) {
+			factor = c.Subtract(highestScale, v.Scale)
 		}
 
-		normalizedRatios[i] = c.Multiply(v.Amount(), c.Power(c.Ten(), factor))
+		normalizedRatios[i] = c.Multiply(v.Amount, c.Power(c.Ten(), factor))
 	}
 
 	newScale := c.Add(d.Scale, highestScale)
