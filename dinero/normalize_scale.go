@@ -25,7 +25,3 @@ func NormalizeScale[T any](dineros ...Dinero[T]) []Dinero[T] {
 
 	return out
 }
-
-func (d Dinero[T]) NormalizeScaleWith(dineros ...Dinero[T]) []Dinero[T] {
-	return NormalizeScale(append(dineros, d)...)
-}
