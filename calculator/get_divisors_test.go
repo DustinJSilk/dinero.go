@@ -4,8 +4,8 @@ import (
 	"reflect"
 	"testing"
 
-	"dinero.go/calculator"
-	"dinero.go/calculator/integer"
+	"github.com/DustinJSilk/dinero.go/calculator"
+	"github.com/DustinJSilk/dinero.go/calculator/integer"
 )
 
 func TestGetDivisors(t *testing.T) {

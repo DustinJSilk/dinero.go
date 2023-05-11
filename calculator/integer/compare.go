@@ -1,7 +1,7 @@
 package integer
 
 import (
-	"dinero.go/calculator"
+	"github.com/DustinJSilk/dinero.go/calculator"
 )
 
 func (Calculator) Compare(a, b int) calculator.CompareResult {

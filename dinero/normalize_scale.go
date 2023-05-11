@@ -1,7 +1,7 @@
 package dinero
 
 import (
-	"dinero.go/divide"
+	"github.com/DustinJSilk/dinero.go/divide"
 )
 
 // Normalize a set of Dinero objects to the highest scale of the set.

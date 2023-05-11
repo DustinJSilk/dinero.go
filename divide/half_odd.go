@@ -1,7 +1,7 @@
 package divide
 
 import (
-	"dinero.go/calculator"
+	"github.com/DustinJSilk/dinero.go/calculator"
 )
 
 // Divide and round towards "nearest neighbor" unless both neighbors are

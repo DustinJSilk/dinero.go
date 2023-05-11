@@ -1,7 +1,7 @@
 package divide
 
 import (
-	"dinero.go/calculator"
+	"github.com/DustinJSilk/dinero.go/calculator"
 )
 
 type Divider[T any] interface {

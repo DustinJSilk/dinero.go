@@ -1,7 +1,7 @@
 package divide
 
 import (
-	"dinero.go/calculator"
+	"github.com/DustinJSilk/dinero.go/calculator"
 )
 
 // Divide and round down. Rounding down happens whenever the quotient is not an integer.

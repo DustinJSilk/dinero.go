@@ -3,8 +3,8 @@ package dinero_test
 import (
 	"testing"
 
-	"dinero.go/currency"
-	"dinero.go/dinero"
+	"github.com/DustinJSilk/dinero.go/currency"
+	"github.com/DustinJSilk/dinero.go/dinero"
 )
 
 func TestLessThan(t *testing.T) {

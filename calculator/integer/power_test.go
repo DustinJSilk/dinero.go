@@ -4,7 +4,7 @@ import (
 	"math"
 	"testing"
 
-	"dinero.go/calculator/integer"
+	"github.com/DustinJSilk/dinero.go/calculator/integer"
 )
 
 func TestPower(t *testing.T) {

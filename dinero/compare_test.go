@@ -3,9 +3,9 @@ package dinero_test
 import (
 	"testing"
 
-	"dinero.go/calculator"
-	"dinero.go/currency"
-	"dinero.go/dinero"
+	"github.com/DustinJSilk/dinero.go/calculator"
+	"github.com/DustinJSilk/dinero.go/currency"
+	"github.com/DustinJSilk/dinero.go/dinero"
 )
 
 func TestCompare(t *testing.T) {

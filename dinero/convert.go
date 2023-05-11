@@ -3,7 +3,7 @@ package dinero
 import (
 	"fmt"
 
-	"dinero.go/currency"
+	"github.com/DustinJSilk/dinero.go/currency"
 )
 
 // Convert a Dinero object from a currency to another.

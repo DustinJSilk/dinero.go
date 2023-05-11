@@ -1,7 +1,7 @@
 package dinero
 
 import (
-	"dinero.go/divide"
+	"github.com/DustinJSilk/dinero.go/divide"
 )
 
 // Transform a Dinero object to a new scale.

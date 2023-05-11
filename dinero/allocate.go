@@ -3,7 +3,7 @@ package dinero
 import (
 	"fmt"
 
-	"dinero.go/divide"
+	"github.com/DustinJSilk/dinero.go/divide"
 )
 
 func unsafeAllocate[T any](dinero Dinero[T], ratios []T) []Dinero[T] {

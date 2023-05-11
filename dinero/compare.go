@@ -3,7 +3,7 @@ package dinero
 import (
 	"fmt"
 
-	"dinero.go/calculator"
+	"github.com/DustinJSilk/dinero.go/calculator"
 )
 
 func unsafeCompare[T any](dinero, comparator Dinero[T]) calculator.CompareResult {

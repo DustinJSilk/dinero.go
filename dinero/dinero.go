@@ -1,9 +1,9 @@
 package dinero
 
 import (
-	"dinero.go/calculator"
-	"dinero.go/calculator/integer"
-	"dinero.go/currency"
+	"github.com/DustinJSilk/dinero.go/calculator"
+	"github.com/DustinJSilk/dinero.go/calculator/integer"
+	"github.com/DustinJSilk/dinero.go/currency"
 )
 
 type Dinero[T any] struct {

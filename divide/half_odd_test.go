@@ -3,9 +3,9 @@ package divide_test
 import (
 	"testing"
 
-	"dinero.go/calculator"
-	"dinero.go/calculator/integer"
-	"dinero.go/divide"
+	"github.com/DustinJSilk/dinero.go/calculator"
+	"github.com/DustinJSilk/dinero.go/calculator/integer"
+	"github.com/DustinJSilk/dinero.go/divide"
 )
 
 func TestHalfOdd(t *testing.T) {

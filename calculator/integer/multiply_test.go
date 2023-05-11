@@ -3,7 +3,7 @@ package integer_test
 import (
 	"testing"
 
-	"dinero.go/calculator/integer"
+	"github.com/DustinJSilk/dinero.go/calculator/integer"
 )
 
 func TestMultiply(t *testing.T) {
