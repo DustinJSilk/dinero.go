@@ -18,6 +18,8 @@ func TestTransformScale(t *testing.T) {
 		divide      divide.Divider[int]
 	}
 
+	abc := currency.NewCurrency("ABC", 6, 1)
+
 	tests := []test{
 		{
 			description: "returns a new Dinero object with a new scale and a converted amount",
@@ -146,7 +148,104 @@ func TestTransformScale(t *testing.T) {
 			scale:       1,
 			expect:      dinero.NewDineroWithScale(5, currency.MGA, 1),
 		},
-		// TODO: finish tests
+		{
+			description: "uses the provided `up` divide function",
+			input:       dinero.NewDineroWithScale(33, abc, 2),
+			scale:       1,
+			expect:      dinero.NewDineroWithScale(6, abc, 1),
+			divide:      divide.UpInt,
+		},
+		{
+			description: "uses the provided `down` divide function",
+			input:       dinero.NewDineroWithScale(33, abc, 2),
+			scale:       1,
+			expect:      dinero.NewDineroWithScale(5, abc, 1),
+			divide:      divide.DownInt,
+		},
+		{
+			description: "uses the provided `halfOdd` divide function A",
+			input:       dinero.NewDineroWithScale(33, abc, 2),
+			scale:       1,
+			expect:      dinero.NewDineroWithScale(5, abc, 1),
+			divide:      divide.HalfOddInt,
+		},
+		{
+			description: "uses the provided `halfOdd` divide function B",
+			input:       dinero.NewDineroWithScale(39, abc, 2),
+			scale:       1,
+			expect:      dinero.NewDineroWithScale(7, abc, 1),
+			divide:      divide.HalfOddInt,
+		},
+		{
+			description: "uses the provided `halfEven` divide function A",
+			input:       dinero.NewDineroWithScale(33, abc, 2),
+			scale:       1,
+			expect:      dinero.NewDineroWithScale(6, abc, 1),
+			divide:      divide.HalfEvenInt,
+		},
+		{
+			description: "uses the provided `halfEven` divide function B",
+			input:       dinero.NewDineroWithScale(39, abc, 2),
+			scale:       1,
+			expect:      dinero.NewDineroWithScale(6, abc, 1),
+			divide:      divide.HalfEvenInt,
+		},
+		{
+			description: "uses the provided `halfDown` divide function A",
+			input:       dinero.NewDineroWithScale(33, abc, 2),
+			scale:       1,
+			expect:      dinero.NewDineroWithScale(5, abc, 1),
+			divide:      divide.HalfDownInt,
+		},
+		{
+			description: "uses the provided `halfDown` divide function B",
+			input:       dinero.NewDineroWithScale(39, abc, 2),
+			scale:       1,
+			expect:      dinero.NewDineroWithScale(6, abc, 1),
+			divide:      divide.HalfDownInt,
+		},
+		{
+			description: "uses the provided `halfUp` divide function A",
+			input:       dinero.NewDineroWithScale(33, abc, 2),
+			scale:       1,
+			expect:      dinero.NewDineroWithScale(6, abc, 1),
+			divide:      divide.HalfUpInt,
+		},
+		{
+			description: "uses the provided `halfUp` divide function B",
+			input:       dinero.NewDineroWithScale(39, abc, 2),
+			scale:       1,
+			expect:      dinero.NewDineroWithScale(7, abc, 1),
+			divide:      divide.HalfUpInt,
+		},
+		{
+			description: "uses the provided `halfTowardsZero` divide function A",
+			input:       dinero.NewDineroWithScale(33, abc, 2),
+			scale:       1,
+			expect:      dinero.NewDineroWithScale(5, abc, 1),
+			divide:      divide.HalfTowardsZeroInt,
+		},
+		{
+			description: "uses the provided `halfTowardsZero` divide function B",
+			input:       dinero.NewDineroWithScale(39, abc, 2),
+			scale:       1,
+			expect:      dinero.NewDineroWithScale(6, abc, 1),
+			divide:      divide.HalfTowardsZeroInt,
+		},
+		{
+			description: "uses the provided `halfAwayFromZero` divide function A",
+			input:       dinero.NewDineroWithScale(33, abc, 2),
+			scale:       1,
+			expect:      dinero.NewDineroWithScale(6, abc, 1),
+			divide:      divide.HalfAwayFromZeroInt,
+		},
+		{
+			description: "uses the provided `halfAwayFromZero` divide function B",
+			input:       dinero.NewDineroWithScale(39, abc, 2),
+			scale:       1,
+			expect:      dinero.NewDineroWithScale(7, abc, 1),
+			divide:      divide.HalfAwayFromZeroInt,
+		},
 	}
 
 	for _, tc := range tests {
