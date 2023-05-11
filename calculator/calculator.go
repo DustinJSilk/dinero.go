@@ -1,6 +1,6 @@
 package calculator
 
-type CalculatorCore[T any] interface {
+type Core[T any] interface {
 	Add(augend, addend T) T
 	Compare(a, b T) CompareResult
 	Decrement(value T) T
@@ -14,7 +14,7 @@ type CalculatorCore[T any] interface {
 }
 
 type Calculator[T any] interface {
-	CalculatorCore[T]
+	Core[T]
 
 	Absolute(value T) T
 	ComputeBase(base ...T) T
@@ -36,12 +36,12 @@ type Calculator[T any] interface {
 }
 
 type calculator[T any] struct {
-	core CalculatorCore[T]
+	core Core[T]
 	one  T
 	ten  T
 }
 
-func NewCalculator[T any](core CalculatorCore[T]) calculator[T] {
+func NewCalculator[T any](core Core[T]) calculator[T] {
 	one := core.Increment(core.Zero())
 	ten := core.Zero()
 	for i := 0; i < 10; i++ {
