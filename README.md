@@ -5,6 +5,10 @@ A JSON Dinero snapshot can be unmarshalled directly into a Go Dinero, making a d
 
 The API is almost identical to it's JavaScript counterpart. Please refer to the JS documentation for more information.
 
+This library has zero dependencies and all tests from the JS implementation have been copied.
+
+It doesn't yet support multiple base currencies.
+
 ## Usage
 
 Dinero.go supports using any number type as its underlying value (int, int32, math/big etc).
@@ -23,6 +27,10 @@ func main() {
   myDinero := dinero.NewDinero(1000, currency.USD)
 }
 ```
+
+Dinero.go also provides convinience methods `int` based rounding functions, for example:
+`divide.DownInt` can be used to round int dineros. For custom types, you will need to pass the
+type to the divider struct and ceate an instance of it: `divide.Down[int32]{}`.
 
 You can also create your own custom type dineros with a custom calculator by implementing the
 `CalculatorCore[T any]` interface.
@@ -60,6 +68,6 @@ func NewInt32Dinero(amount int32, currency currency.Currency[int32]) dinero.Dine
 }
 
 func main() {
-  myDinero := NewInt32Dinero(1000, USD)
+  myInt32Dinero := NewInt32Dinero(1000, USD)
 }
 ```
