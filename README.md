@@ -19,8 +19,8 @@ For convenience, dinero.go provides access to quickly create `int` based Dineros
 package main
 
 import (
-	"github.com/DustinJSilk/dinero/dinero"
-	"github.com/DustinJSilk/dinero/currency"
+	"github.com/DustinJSilk/dinero.go/dinero"
+	"github.com/DustinJSilk/dinero.go/currency"
 )
 
 func main() {
@@ -56,8 +56,8 @@ You can then use the new calculator by passing the calculator to the NewDineroWi
 package main
 
 import (
-	"github.com/DustinJSilk/dinero/dinero"
-	"github.com/DustinJSilk/dinero/currency"
+	"github.com/DustinJSilk/dinero.go/dinero"
+	"github.com/DustinJSilk/dinero.go/currency"
 )
 
 var int32Calculator = calculator.NewCalculator(/* pass in your custom CalculatorCore */)
