@@ -14,36 +14,35 @@ func TestMultiply(t *testing.T) {
 		dinero      dinero.Dinero[int]
 		multiplier  int
 		expect      dinero.Dinero[int]
-		expectErr   bool
 	}
 
 	tests := []test{
 		{
-			description: "multiplies positive Dinero objects",
+			description: "multiplies positive Dinero objects by positive",
 			dinero:      dinero.NewDinero(400, currency.USD),
 			multiplier:  4,
 			expect:      dinero.NewDinero(1600, currency.USD),
 		},
 		{
-			description: "multiplies positive Dinero objects",
+			description: "multiplies positive Dinero objects by negative number",
 			dinero:      dinero.NewDinero(400, currency.USD),
 			multiplier:  -1,
 			expect:      dinero.NewDinero(-400, currency.USD),
 		},
 		{
-			description: "multiplies positive Dinero objects",
+			description: "multiplies negative Dinero objects by positive number",
 			dinero:      dinero.NewDinero(-400, currency.USD),
 			multiplier:  4,
 			expect:      dinero.NewDinero(-1600, currency.USD),
 		},
 		{
-			description: "multiplies positive Dinero objects",
+			description: "multiplies negative Dinero objects by negative number",
 			dinero:      dinero.NewDinero(-400, currency.USD),
 			multiplier:  -1,
 			expect:      dinero.NewDinero(400, currency.USD),
 		},
 		{
-			description: "multiplies positive Dinero objects",
+			description: "multiplies negative Dinero objects by positive 1",
 			dinero:      dinero.NewDinero(-400, currency.USD),
 			multiplier:  1,
 			expect:      dinero.NewDinero(-400, currency.USD),
@@ -51,15 +50,7 @@ func TestMultiply(t *testing.T) {
 	}
 
 	for _, tc := range tests {
-		got, err := tc.dinero.Multiply(tc.multiplier)
-		if err != nil {
-			if tc.expectErr {
-				continue
-			}
-
-			t.Fatalf("%s error: %v, %v, %v", tc.description, tc.dinero, tc.multiplier, err)
-		}
-
+		got := tc.dinero.Multiply(tc.multiplier)
 		if !reflect.DeepEqual(tc.expect, got) {
 			t.Fatalf("%s expected a: %v, got: %v", tc.description, tc.expect, got)
 		}
@@ -104,9 +95,6 @@ func BenchmarkMultiply(b *testing.B) {
 	da := dinero.NewDinero(100, currency.USD)
 
 	for i := 0; i < b.N; i++ {
-		_, err := da.Multiply(15)
-		if err != nil {
-			b.Fatalf("error: %e", err)
-		}
+		da.Multiply(15)
 	}
 }

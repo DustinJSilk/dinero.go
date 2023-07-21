@@ -7,18 +7,20 @@ import (
 )
 
 type Dinero[T any] struct {
-	Amount     T                    `json:"amount"`
-	Currency   currency.Currency[T] `json:"currency"`
-	Scale      T                    `json:"scale"`
-	calculator calculator.Calculator[T]
+	Amount     T                        `json:"amount"`
+	Currency   currency.Currency[T]     `json:"currency"`
+	Scale      T                        `json:"scale"`
+	calculator calculator.Calculator[T] `json:"-"`
 }
+
+var IntCalculator = calculator.NewCalculator[int](integer.Calculator{})
 
 func NewDinero(amount int, currency currency.Currency[int]) Dinero[int] {
 	dinero := Dinero[int]{
 		Amount:     amount,
 		Scale:      currency.Exponent,
 		Currency:   currency,
-		calculator: calculator.NewCalculator[int](integer.Calculator{}),
+		calculator: IntCalculator,
 	}
 
 	return dinero

@@ -2,9 +2,9 @@ package dinero
 
 // Multiply the passed Dinero object.
 // To multiply by a fraction, use MultiplyScaled.
-func (d Dinero[T]) Multiply(multiplier T) (Dinero[T], error) {
+func (d Dinero[T]) Multiply(multiplier T) Dinero[T] {
 	amount := d.calculator.Multiply(d.Amount, multiplier)
-	return NewDineroWithOptions(amount, d.Currency, d.Scale, d.calculator), nil
+	return NewDineroWithOptions(amount, d.Currency, d.Scale, d.calculator)
 }
 
 // Multiply the passed Dinero object by a ScaledAmount.
