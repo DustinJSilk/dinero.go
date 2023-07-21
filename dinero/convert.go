@@ -13,15 +13,15 @@ func (d Dinero[T]) Convert(currency currency.Currency[T], rates map[string]Scale
 		return Dinero[T]{}, fmt.Errorf("missing currency rate")
 	}
 
-	newScale := d.calculator.Add(d.Scale, rate.Scale)
+	newScale := d.Calculator.Add(d.Scale, rate.Scale)
 
 	return NewDineroWithOptions(
-		d.calculator.Multiply(d.Amount, rate.Amount),
+		d.Calculator.Multiply(d.Amount, rate.Amount),
 		currency,
 		newScale,
-		d.calculator,
+		d.Calculator,
 	).TransformScale(
-		d.calculator.Maximum(newScale, currency.Exponent),
+		d.Calculator.Maximum(newScale, currency.Exponent),
 		nil,
 	)
 }

@@ -1,6 +1,7 @@
 package dinero_test
 
 import (
+	"math/big"
 	"reflect"
 	"testing"
 
@@ -110,6 +111,136 @@ func TestAllocate(t *testing.T) {
 			description: "errors when using only zero ratios",
 			dinero:      dinero.NewDinero(1003, currency.MGA),
 			ratios:      []int{0, 0},
+			expectErr:   true,
+		},
+	}
+
+	for _, tc := range tests {
+		got, err := tc.dinero.Allocate(tc.ratios...)
+		if err != nil {
+			if tc.expectErr {
+				continue
+			}
+
+			t.Fatalf("%s error: %v", tc.description, err)
+		}
+
+		if !reflect.DeepEqual(tc.expect, got) {
+			t.Fatalf("%s expected a: %v, got: %v", tc.description, tc.expect, got)
+		}
+	}
+}
+
+func bigRatios(ratios ...int) []*big.Int {
+	out := make([]*big.Int, len(ratios))
+	for i, v := range ratios {
+		out[i] = big.NewInt(int64(v))
+	}
+	return out
+}
+
+func TestAllocateBigInt(t *testing.T) {
+	type test struct {
+		description string
+		dinero      dinero.Dinero[*big.Int]
+		ratios      []*big.Int
+		expect      []dinero.Dinero[*big.Int]
+		expectErr   bool
+	}
+
+	tests := []test{
+		// decimal based currencies (USD)
+		{
+			description: "allocates to percentages",
+			dinero:      dinero.NewBigDinero(1003, BigUSD),
+			ratios:      bigRatios(50, 50),
+			expect: []dinero.Dinero[*big.Int]{
+				dinero.NewBigDinero(502, BigUSD),
+				dinero.NewBigDinero(501, BigUSD),
+			},
+		},
+		{
+			description: "allocates to ratios",
+			dinero:      dinero.NewBigDinero(100, BigUSD),
+			ratios:      bigRatios(1, 3),
+			expect: []dinero.Dinero[*big.Int]{
+				dinero.NewBigDinero(25, BigUSD),
+				dinero.NewBigDinero(75, BigUSD),
+			},
+		},
+		{
+			description: "ignores zero ratios",
+			dinero:      dinero.NewBigDinero(1003, BigUSD),
+			ratios:      bigRatios(0, 50, 50),
+			expect: []dinero.Dinero[*big.Int]{
+				dinero.NewBigDinero(0, BigUSD),
+				dinero.NewBigDinero(502, BigUSD),
+				dinero.NewBigDinero(501, BigUSD),
+			},
+		},
+		{
+			description: "errors when using empty ratios",
+			dinero:      dinero.NewBigDinero(1003, BigUSD),
+			ratios:      bigRatios(),
+			expectErr:   true,
+		},
+		{
+			description: "errors when using negative ratios",
+			dinero:      dinero.NewBigDinero(1003, BigUSD),
+			ratios:      bigRatios(-50, 50),
+			expectErr:   true,
+		},
+		{
+			description: "errors when using only zero ratios",
+			dinero:      dinero.NewBigDinero(1003, BigUSD),
+			ratios:      bigRatios(0, 0),
+			expectErr:   true,
+		},
+		// non-decimal based currencies (MGA)
+		{
+			description: "allocates to percentages",
+			dinero:      dinero.NewBigDinero(1003, BigMGA),
+			ratios:      bigRatios(50, 50),
+			expect: []dinero.Dinero[*big.Int]{
+				dinero.NewBigDineroWithScale(502, BigMGA, 1),
+				dinero.NewBigDineroWithScale(501, BigMGA, 1),
+			},
+		},
+		{
+			description: "allocates to ratios",
+			dinero:      dinero.NewBigDinero(100, BigMGA),
+			ratios:      bigRatios(1, 3),
+			expect: []dinero.Dinero[*big.Int]{
+				dinero.NewBigDineroWithScale(25, BigMGA, 1),
+				dinero.NewBigDineroWithScale(75, BigMGA, 1),
+			},
+		},
+		{
+			description: "ignores zero ratios",
+			dinero:      dinero.NewBigDinero(1003, BigMGA),
+			ratios:      bigRatios(0, 50, 50),
+			expect: []dinero.Dinero[*big.Int]{
+				dinero.NewBigDineroWithScale(0, BigMGA, 1),
+				dinero.NewBigDineroWithScale(502, BigMGA, 1),
+				dinero.NewBigDineroWithScale(501, BigMGA, 1),
+			},
+		},
+		{
+			description: "errors when using empty ratios",
+			dinero:      dinero.NewBigDinero(1003, BigMGA),
+			ratios:      bigRatios(),
+			expectErr:   true,
+		},
+		{
+			description: "errors when using negative ratios",
+			dinero:      dinero.NewBigDinero(1003, BigMGA),
+			ratios:      bigRatios(-50, 50),
+			expectErr:   true,
+		},
+		{
+			description: "errors when using only zero ratios",
+			dinero:      dinero.NewBigDinero(1003, BigMGA),
+			ratios:      bigRatios(0, 0),
 			expectErr:   true,
 		},
 	}

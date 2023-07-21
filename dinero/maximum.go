@@ -18,9 +18,9 @@ func Maximum[T any](dineros ...Dinero[T]) (Dinero[T], error) {
 	}
 
 	return NewDineroWithOptions(
-		d.calculator.Maximum(amounts...),
+		d.Calculator.Maximum(amounts...),
 		d.Currency,
 		d.Scale,
-		d.calculator,
+		d.Calculator,
 	), nil
 }

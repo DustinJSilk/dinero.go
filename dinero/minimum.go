@@ -18,9 +18,9 @@ func Minimum[T any](dineros ...Dinero[T]) (Dinero[T], error) {
 	}
 
 	return NewDineroWithOptions(
-		d.calculator.Minimum(amounts...),
+		d.Calculator.Minimum(amounts...),
 		d.Currency,
 		d.Scale,
-		d.calculator,
+		d.Calculator,
 	), nil
 }
