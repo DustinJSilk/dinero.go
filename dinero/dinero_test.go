@@ -23,3 +23,15 @@ var BigMGA = currency.Currency[*big.Int]{
 	Base:     big.NewInt(5),
 	Exponent: big.NewInt(1),
 }
+
+var BigMRU = currency.Currency[*big.Int]{
+	Code:     "MRU",
+	Base:     big.NewInt(5),
+	Exponent: big.NewInt(1),
+}
+
+var BigIQD = currency.Currency[*big.Int]{
+	Code:     "IQD",
+	Base:     big.NewInt(10),
+	Exponent: big.NewInt(3),
+}
