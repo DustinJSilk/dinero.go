@@ -1,6 +1,7 @@
 package dinero_test
 
 import (
+	"math/big"
 	"reflect"
 	"testing"
 
@@ -11,29 +12,29 @@ import (
 func TestMaximum(t *testing.T) {
 	type test struct {
 		description string
-		a           dinero.Dinero[int]
-		b           dinero.Dinero[int]
-		expect      dinero.Dinero[int]
+		a           dinero.Dinero[*big.Int]
+		b           dinero.Dinero[*big.Int]
+		expect      dinero.Dinero[*big.Int]
 		expectErr   bool
 	}
 
 	tests := []test{
 		{
 			description: "returns the greatest from a set of Dinero objects",
-			a:           dinero.NewDinero(150, currency.USD),
-			b:           dinero.NewDinero(50, currency.USD),
-			expect:      dinero.NewDinero(150, currency.USD),
+			a:           dinero.NewBigDinero(150, BigUSD),
+			b:           dinero.NewBigDinero(50, BigUSD),
+			expect:      dinero.NewBigDinero(150, BigUSD),
 		},
 		{
 			description: "returns the greatest from a set of Dinero objects after normalization",
-			a:           dinero.NewDinero(500, currency.USD),
-			b:           dinero.NewDineroWithScale(1000, currency.USD, 3),
-			expect:      dinero.NewDineroWithScale(5000, currency.USD, 3),
+			a:           dinero.NewBigDinero(500, BigUSD),
+			b:           dinero.NewBigDineroWithScale(1000, BigUSD, 3),
+			expect:      dinero.NewBigDineroWithScale(5000, BigUSD, 3),
 		},
 		{
 			description: "returns an error when using different currencies",
-			a:           dinero.NewDinero(500, currency.USD),
-			b:           dinero.NewDinero(100, currency.EUR),
+			a:           dinero.NewBigDinero(500, BigUSD),
+			b:           dinero.NewBigDinero(100, BigEUR),
 			expectErr:   true,
 		},
 	}

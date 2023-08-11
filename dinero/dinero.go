@@ -76,6 +76,10 @@ func NewBigDineroWithScale(amount int64, currency currency.Currency[*big.Int], s
 	}
 }
 
+func (d *Dinero[T]) WithCalculator(calculator calculator.Calculator[T]) Dinero[T] {
+	return NewDineroWithOptions(d.Amount, d.Currency, d.Scale, calculator)
+}
+
 // Get the calculator or find the correct type if nil.
 func (d *Dinero[T]) calc() calculator.Calculator[T] {
 	if d.Calculator != nil {
