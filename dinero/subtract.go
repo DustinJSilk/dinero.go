@@ -13,7 +13,8 @@ func (d Dinero[T]) Subtract(subtrahend Dinero[T]) (Dinero[T], error) {
 		return Dinero[T]{}, fmt.Errorf("mismatched currencies")
 	}
 
+	c := d.calc()
 	normalized := NormalizeScale(d, subtrahend)
-	amount := d.Calculator.Subtract(normalized[0].Amount, normalized[1].Amount)
-	return NewDineroWithOptions(amount, d.Currency, normalized[0].Scale, d.Calculator), nil
+	amount := c.Subtract(normalized[0].Amount, normalized[1].Amount)
+	return NewDineroWithOptions(amount, d.Currency, normalized[0].Scale, c), nil
 }

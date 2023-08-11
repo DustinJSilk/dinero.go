@@ -1,6 +1,7 @@
 package dinero
 
 import (
+	"log"
 	"math/big"
 
 	"github.com/DustinJSilk/dinero.go/calculator"
@@ -73,4 +74,29 @@ func NewBigDineroWithScale(amount int64, currency currency.Currency[*big.Int], s
 		Scale:      big.NewInt(scale),
 		Calculator: BigIntCalculator,
 	}
+}
+
+// Get the calculator or find the correct type if nil.
+func (d *Dinero[T]) calc() calculator.Calculator[T] {
+	if d.Calculator != nil {
+		return d.Calculator
+	}
+
+	switch any(d.Amount).(type) {
+	case int:
+		return castIntCalculator[T](&IntCalculator)
+	case *big.Int:
+		return castBigCalculator[T](&BigIntCalculator)
+	default:
+		log.Fatal("dinero calculator not found")
+		return castIntCalculator[T](&IntCalculator)
+	}
+}
+
+func castIntCalculator[T any](c calculator.Calculator[int]) calculator.Calculator[T] {
+	return c.(calculator.Calculator[T])
+}
+
+func castBigCalculator[T any](c calculator.Calculator[*big.Int]) calculator.Calculator[T] {
+	return c.(calculator.Calculator[T])
 }

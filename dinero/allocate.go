@@ -30,15 +30,17 @@ func (d Dinero[T]) Allocate(ratios ...T) ([]Dinero[T], error) {
 		return nil, fmt.Errorf("missing ratios")
 	}
 
-	zero := d.Calculator.Zero()
+	c := d.calc()
+
+	zero := c.Zero()
 	hasOnlyPositiveRatios := true
 	hasOneNonZeroRatio := false
 	for _, v := range ratios {
-		if d.Calculator.LessThan(v, zero) {
+		if c.LessThan(v, zero) {
 			hasOnlyPositiveRatios = false
 			break
 		}
-		if d.Calculator.GreaterThan(v, zero) {
+		if c.GreaterThan(v, zero) {
 			hasOneNonZeroRatio = true
 		}
 	}

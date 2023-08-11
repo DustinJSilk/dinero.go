@@ -1,15 +1,16 @@
 package dinero
 
 func (d Dinero[T]) ToUnit() ([]T, error) {
+	c := d.calc()
 	base := d.Currency.Base
-	divisor := d.Calculator.Power(base, d.Scale)
+	divisor := c.Power(base, d.Scale)
 
-	quotient, err := d.Calculator.IntegerDivide(d.Amount, divisor)
+	quotient, err := c.IntegerDivide(d.Amount, divisor)
 	if err != nil {
 		return nil, err
 	}
 
-	remainder, err := d.Calculator.Modulo(d.Amount, divisor)
+	remainder, err := c.Modulo(d.Amount, divisor)
 	if err != nil {
 		return nil, err
 	}

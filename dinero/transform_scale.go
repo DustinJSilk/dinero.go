@@ -17,30 +17,31 @@ import (
 // For convenience, Dinero.go provides the following divide functions: up, down, halfUp, halfDown,
 // halfOdd, halfEven (bankers rounding), halfTowardsZero, and halfAwayFromZero.
 func (d Dinero[T]) TransformScale(newScale T, divider divide.Divider[T]) (Dinero[T], error) {
-	if d.Calculator.Equal(d.Scale, newScale) {
-		return NewDineroWithOptions(d.Amount, d.Currency, d.Scale, d.Calculator), nil
+	c := d.calc()
+	if c.Equal(d.Scale, newScale) {
+		return NewDineroWithOptions(d.Amount, d.Currency, d.Scale, c), nil
 	}
 
-	isLarger := d.Calculator.GreaterThan(newScale, d.Scale)
-	base := d.Calculator.ComputeBase(d.Currency.Base)
+	isLarger := c.GreaterThan(newScale, d.Scale)
+	base := c.ComputeBase(d.Currency.Base)
 	var newAmount T
 
 	if isLarger {
-		factor := d.Calculator.Power(base, d.Calculator.Subtract(newScale, d.Scale))
-		newAmount = d.Calculator.Multiply(d.Amount, factor)
+		factor := c.Power(base, c.Subtract(newScale, d.Scale))
+		newAmount = c.Multiply(d.Amount, factor)
 	} else {
-		factor := d.Calculator.Power(base, d.Calculator.Subtract(d.Scale, newScale))
+		factor := c.Power(base, c.Subtract(d.Scale, newScale))
 
 		if divider == nil {
 			divider = divide.Down[T]{}
 		}
 
-		amount, err := divider.Divide(d.Amount, factor, d.Calculator)
+		amount, err := divider.Divide(d.Amount, factor, c)
 		if err != nil {
 			return Dinero[T]{}, err
 		}
 		newAmount = amount
 	}
 
-	return NewDineroWithOptions(newAmount, d.Currency, newScale, d.Calculator), nil
+	return NewDineroWithOptions(newAmount, d.Currency, newScale, c), nil
 }
