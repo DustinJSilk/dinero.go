@@ -17,7 +17,7 @@ import (
 // For convenience, Dinero.go provides the following divide functions: up, down, halfUp, halfDown,
 // halfOdd, halfEven (bankers rounding), halfTowardsZero, and halfAwayFromZero.
 func (d Dinero[T]) TransformScale(newScale T, divider divide.Divider[T]) (Dinero[T], error) {
-	c := d.calc()
+	c := d.Calculator()
 	if c.Equal(d.Scale, newScale) {
 		return NewDineroWithOptions(d.Amount, d.Currency, d.Scale, c), nil
 	}

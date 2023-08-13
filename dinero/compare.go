@@ -7,7 +7,7 @@ import (
 )
 
 func unsafeCompare[T any](dinero, comparator Dinero[T]) calculator.CompareResult {
-	return dinero.calc().Compare(dinero.Amount, comparator.Amount)
+	return dinero.Calculator().Compare(dinero.Amount, comparator.Amount)
 }
 
 // Compare the value of d relative to comparator.

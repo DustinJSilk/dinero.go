@@ -1,7 +1,7 @@
 package dinero
 
 func HaveSameCurrency[T any](dineros ...Dinero[T]) bool {
-	c := dineros[0].calc()
+	c := dineros[0].Calculator()
 	comparator := dineros[0].Currency
 	comparatorBase := c.ComputeBase(comparator.Base)
 

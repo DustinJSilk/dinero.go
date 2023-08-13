@@ -15,7 +15,7 @@ func NormalizeScale[T any](dineros ...Dinero[T]) []Dinero[T] {
 		scales[i] = v.Scale
 	}
 
-	c := dineros[0].calc()
+	c := dineros[0].Calculator()
 	highestScale := c.Maximum(scales...)
 
 	out := make([]Dinero[T], len(dineros))

@@ -1,7 +1,7 @@
 package dinero
 
 func (d Dinero[T]) HasSubUnits() bool {
-	c := d.calc()
+	c := d.Calculator()
 	base := c.ComputeBase(d.Currency.Base)
 
 	remainder, err := c.Modulo(d.Amount, c.Power(base, d.Scale))

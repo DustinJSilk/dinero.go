@@ -1,7 +1,7 @@
 package dinero
 
 func (d Dinero[T]) ToUnit() ([]T, error) {
-	c := d.calc()
+	c := d.Calculator()
 	base := d.Currency.Base
 	divisor := c.Power(base, d.Scale)
 
