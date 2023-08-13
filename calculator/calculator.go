@@ -10,6 +10,8 @@ type Core[T any] interface {
 	Multiply(multiplicand, multiplier T) T
 	Power(base, exponent T) T
 	Subtract(minuend, subtrahend T) T
+	ToInt(v T) int
+	ToString(v T) string
 	Zero() T
 }
 
@@ -93,6 +95,14 @@ func (c calculator[T]) Subtract(minuend, subtrahend T) T {
 
 func (c calculator[T]) Ten() T {
 	return c.ten
+}
+
+func (c calculator[T]) ToInt(v T) int {
+	return c.core.ToInt(v)
+}
+
+func (c calculator[T]) ToString(v T) string {
+	return c.core.ToString(v)
 }
 
 func (c calculator[T]) Zero() T {
