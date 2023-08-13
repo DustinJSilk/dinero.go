@@ -13,7 +13,7 @@ func (d Dinero[T]) Convert(currency currency.Currency[T], rates map[string]Scale
 		return Dinero[T]{}, fmt.Errorf("missing currency rate")
 	}
 
-	c := d.calc()
+	c := d.Calculator()
 	newScale := c.Add(d.Scale, rate.Scale)
 
 	return NewDineroWithOptions(

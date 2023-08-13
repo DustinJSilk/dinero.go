@@ -14,7 +14,7 @@ type Dinero[T any] struct {
 	Amount     T                        `json:"amount"`
 	Currency   currency.Currency[T]     `json:"currency"`
 	Scale      T                        `json:"scale"`
-	Calculator calculator.Calculator[T] `json:"-"`
+	calculator calculator.Calculator[T] `json:"-"`
 }
 
 var IntCalculator = calculator.NewCalculator[int](integer.Calculator{})
@@ -25,7 +25,7 @@ func NewDinero(amount int, currency currency.Currency[int]) Dinero[int] {
 		Amount:     amount,
 		Scale:      currency.Exponent,
 		Currency:   currency,
-		Calculator: IntCalculator,
+		calculator: IntCalculator,
 	}
 
 	return dinero
@@ -36,7 +36,7 @@ func NewDineroWithScale(amount int, currency currency.Currency[int], scale int) 
 		Amount:     amount,
 		Scale:      scale,
 		Currency:   currency,
-		Calculator: calculator.NewCalculator[int](integer.Calculator{}),
+		calculator: calculator.NewCalculator[int](integer.Calculator{}),
 	}
 
 	return dinero
@@ -52,7 +52,7 @@ func NewDineroWithOptions[T any](
 		Amount:     amount,
 		Currency:   currency,
 		Scale:      scale,
-		Calculator: calculator,
+		calculator: calculator,
 	}
 
 	return dinero
@@ -62,7 +62,7 @@ func NewBigDinero(amount int64, currency currency.Currency[*big.Int]) Dinero[*bi
 	return Dinero[*big.Int]{
 		Amount:     big.NewInt(amount),
 		Currency:   currency,
-		Calculator: BigIntCalculator,
+		calculator: BigIntCalculator,
 		Scale:      currency.Exponent,
 	}
 }
@@ -72,7 +72,7 @@ func NewBigDineroWithScale(amount int64, currency currency.Currency[*big.Int], s
 		Amount:     big.NewInt(amount),
 		Currency:   currency,
 		Scale:      big.NewInt(scale),
-		Calculator: BigIntCalculator,
+		calculator: BigIntCalculator,
 	}
 }
 
@@ -81,9 +81,9 @@ func (d *Dinero[T]) WithCalculator(calculator calculator.Calculator[T]) Dinero[T
 }
 
 // Get the calculator or find the correct type if nil.
-func (d *Dinero[T]) calc() calculator.Calculator[T] {
-	if d.Calculator != nil {
-		return d.Calculator
+func (d *Dinero[T]) Calculator() calculator.Calculator[T] {
+	if d.calculator != nil {
+		return d.calculator
 	}
 
 	switch any(d.Amount).(type) {

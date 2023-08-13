@@ -8,7 +8,7 @@ import (
 var ErrNonDecimalCurrency = errors.New("non-decimal currency")
 
 func (d Dinero[T]) ToDecimal(options ...Option[T]) (string, error) {
-	c := d.calc()
+	c := d.Calculator()
 
 	opts := Options[T]{}
 	for _, op := range options {

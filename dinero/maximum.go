@@ -12,7 +12,7 @@ func Maximum[T any](dineros ...Dinero[T]) (Dinero[T], error) {
 
 	normalized := NormalizeScale(dineros...)
 	d := normalized[0]
-	c := d.calc()
+	c := d.Calculator()
 	amounts := make([]T, len(dineros))
 	for i, v := range normalized {
 		amounts[i] = v.Amount
