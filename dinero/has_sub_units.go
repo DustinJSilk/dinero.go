@@ -1,12 +1,13 @@
 package dinero
 
 func (d Dinero[T]) HasSubUnits() bool {
-	base := d.calculator.ComputeBase(d.Currency.Base)
+	c := d.calc()
+	base := c.ComputeBase(d.Currency.Base)
 
-	remainder, err := d.calculator.Modulo(d.Amount, d.calculator.Power(base, d.Scale))
+	remainder, err := c.Modulo(d.Amount, c.Power(base, d.Scale))
 	if err != nil {
 		return false
 	}
 
-	return !d.calculator.Equal(remainder, d.calculator.Zero())
+	return !c.Equal(remainder, c.Zero())
 }

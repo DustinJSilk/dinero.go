@@ -1,6 +1,8 @@
 package divide
 
 import (
+	"math/big"
+
 	"github.com/DustinJSilk/dinero.go/calculator"
 )
 
@@ -9,6 +11,7 @@ import (
 type HalfEven[T any] struct{}
 
 var HalfEvenInt = HalfEven[int]{}
+var HalfEvenBigInt = HalfEven[*big.Int]{}
 
 func (HalfEven[T]) Divide(amount T, factor T, calculator calculator.Calculator[T]) (T, error) {
 	rounded, err := HalfUp[T]{}.Divide(amount, factor, calculator)

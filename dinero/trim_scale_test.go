@@ -1,6 +1,7 @@
 package dinero_test
 
 import (
+	"math/big"
 	"reflect"
 	"testing"
 
@@ -37,6 +38,54 @@ func TestTrimScale(t *testing.T) {
 			description: "doesn't crash on zero amounts",
 			dinero:      dinero.NewDinero(0, currency.USD),
 			expect:      dinero.NewDineroWithScale(0, currency.USD, 2),
+		},
+	}
+
+	for _, tc := range tests {
+		got, err := tc.dinero.TrimScale()
+		if err != nil {
+			if tc.expectErr {
+				continue
+			}
+
+			t.Fatalf("%s error: %v, %v, %v", tc.description, tc.dinero, tc.multiplier, err)
+		}
+
+		if !reflect.DeepEqual(tc.expect, got) {
+			t.Fatalf("%s expected a: %v, got: %v", tc.description, tc.expect, got)
+		}
+	}
+}
+
+func TestTrimScaleBigInt(t *testing.T) {
+	type test struct {
+		description string
+		dinero      dinero.Dinero[*big.Int]
+		multiplier  *big.Int
+		expect      dinero.Dinero[*big.Int]
+		expectErr   bool
+	}
+
+	tests := []test{
+		{
+			description: "trims a Dinero object down to its currency exponent's scale",
+			dinero:      dinero.NewBigDineroWithScale(500000, BigUSD, 5),
+			expect:      dinero.NewBigDineroWithScale(500, BigUSD, 2),
+		},
+		{
+			description: "trims a Dinero object down to the safest possible scale",
+			dinero:      dinero.NewBigDineroWithScale(55550, BigUSD, 4),
+			expect:      dinero.NewBigDineroWithScale(5555, BigUSD, 3),
+		},
+		{
+			description: "doesn't trim the scale when there's nothing to trim",
+			dinero:      dinero.NewBigDineroWithScale(5555, BigUSD, 3),
+			expect:      dinero.NewBigDineroWithScale(5555, BigUSD, 3),
+		},
+		{
+			description: "doesn't crash on zero amounts",
+			dinero:      dinero.NewBigDinero(0, BigUSD),
+			expect:      dinero.NewBigDineroWithScale(0, BigUSD, 2),
 		},
 	}
 

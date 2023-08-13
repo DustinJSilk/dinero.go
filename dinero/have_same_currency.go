@@ -1,14 +1,14 @@
 package dinero
 
 func HaveSameCurrency[T any](dineros ...Dinero[T]) bool {
-	calculator := dineros[0].calculator
+	c := dineros[0].calc()
 	comparator := dineros[0].Currency
-	comparatorBase := calculator.ComputeBase(comparator.Base)
+	comparatorBase := c.ComputeBase(comparator.Base)
 
 	for _, v := range dineros {
 		if v.Currency.Code != comparator.Code ||
-			!calculator.Equal(v.Currency.Exponent, comparator.Exponent) ||
-			!calculator.Equal(calculator.ComputeBase(v.Currency.Base), comparatorBase) {
+			!c.Equal(v.Currency.Exponent, comparator.Exponent) ||
+			!c.Equal(c.ComputeBase(v.Currency.Base), comparatorBase) {
 			return false
 		}
 	}

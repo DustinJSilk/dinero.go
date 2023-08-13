@@ -7,11 +7,11 @@ import (
 )
 
 func unsafeAllocate[T any](dinero Dinero[T], ratios []T) []Dinero[T] {
-	shares := dinero.calculator.Distribute(dinero.Amount, ratios...)
+	shares := dinero.Calculator.Distribute(dinero.Amount, ratios...)
 
 	dineros := make([]Dinero[T], len(shares))
 	for i, v := range shares {
-		dineros[i] = NewDineroWithOptions(v, dinero.Currency, dinero.Scale, dinero.calculator)
+		dineros[i] = NewDineroWithOptions(v, dinero.Currency, dinero.Scale, dinero.Calculator)
 	}
 
 	return dineros
@@ -30,15 +30,17 @@ func (d Dinero[T]) Allocate(ratios ...T) ([]Dinero[T], error) {
 		return nil, fmt.Errorf("missing ratios")
 	}
 
-	zero := d.calculator.Zero()
+	c := d.calc()
+
+	zero := c.Zero()
 	hasOnlyPositiveRatios := true
 	hasOneNonZeroRatio := false
 	for _, v := range ratios {
-		if d.calculator.LessThan(v, zero) {
+		if c.LessThan(v, zero) {
 			hasOnlyPositiveRatios = false
 			break
 		}
-		if d.calculator.GreaterThan(v, zero) {
+		if c.GreaterThan(v, zero) {
 			hasOneNonZeroRatio = true
 		}
 	}
@@ -56,7 +58,7 @@ func (d Dinero[T]) Allocate(ratios ...T) ([]Dinero[T], error) {
 
 // Distribute the amount of a Dinero object across a list of scaled ratios.
 func (d Dinero[T]) AllocateScaled(ratios ...ScaledAmount[T]) ([]Dinero[T], error) {
-	c := d.calculator
+	c := d.Calculator
 
 	scales := make([]T, len(ratios))
 	for i, v := range ratios {

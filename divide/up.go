@@ -1,6 +1,8 @@
 package divide
 
 import (
+	"math/big"
+
 	"github.com/DustinJSilk/dinero.go/calculator"
 )
 
@@ -8,6 +10,7 @@ import (
 type Up[T any] struct{}
 
 var UpInt = Up[int]{}
+var UpBigInt = Up[*big.Int]{}
 
 func (Up[T]) Divide(amount T, factor T, calculator calculator.Calculator[T]) (T, error) {
 	zero := calculator.Zero()
